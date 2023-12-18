@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>rutas_aereas/include/almacenRutas.h</itemPath>
+      <itemPath>rutas_aereas/include/imagen.h</itemPath>
       <itemPath>rutas_aereas/include/pais.h</itemPath>
       <itemPath>rutas_aereas/include/paises.h</itemPath>
       <itemPath>rutas_aereas/include/punto.h</itemPath>
@@ -50,6 +51,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="rutas_aereas/include/imagen.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="rutas_aereas/include/pais.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="rutas_aereas/include/paises.h" ex="false" tool="3" flavor2="0">
@@ -93,6 +96,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="rutas_aereas/include/imagen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="rutas_aereas/include/pais.h" ex="false" tool="3" flavor2="0">
       </item>

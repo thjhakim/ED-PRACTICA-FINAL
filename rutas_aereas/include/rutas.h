@@ -1,35 +1,66 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/file.h to edit this template
- */
 
 /* 
  * File:   rutas.h
  * Author: angel_rodriguez
- *
- * Created on 18 de diciembre de 2023, 16:45
  */
 
 #ifndef RUTAS_H
 #define RUTAS_H
 
-#include<iostream>
+#include <iostream>
 #include <string>
+#include <list>
+
 #include "punto.h"
+
 using namespace std;
 
+/**
+ * @class Ruta
+ * @brief Representa una ruta aérea con una serie de puntos.
+ */
 class Ruta{
 private:
     list<Punto> puntos;
     string code;
     
 public:
-    Ruta();
-    void Insertar(const Punto & n);
-    void Borrar(const Punto &n);
-    string GetCode()const;
     
-    void SetCode(const string & code);
+    /**
+     * Constructor por defecto.
+     */
+    Ruta(){
+        code = "";        
+    }
+    
+    /**
+     * @brief Inserta un punto en la lista.
+     * @param n punto a insertar pasado por referencia.
+     */
+    void Insertar(const Punto & n){
+        puntos.push_back(n);
+    }
+    
+    void Borrar(const Punto &n){
+        
+    }
+    
+    /**
+     * Obtiene el código de la ruta
+     * @return Codigo de ruta
+     */
+    string GetCode()const{
+        return code;
+    }
+    
+    /**
+     * Inserta el codigo de la ruta.
+     * @param code codigo de la ruta.
+     */
+    void SetCode(const string & code){
+        this->code = code;
+    }
+    
     bool operator==(const Ruta &R)const;
     bool operator<(const Ruta &R)const;
     
