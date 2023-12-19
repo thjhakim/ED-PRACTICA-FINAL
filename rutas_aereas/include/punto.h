@@ -16,26 +16,39 @@ using namespace std;
  */
 class Punto{
 private:
-    double latitud, longitud;
+    double latitud, longitud; // Latitud y longitud del punto.
+    string descripcion;       // Breve descripcion del punto.
+    
 public:
     
     /**
-     * @brief Constructor por defecto. Inizializa latitud y longitud a 0.
+     * @brief Constructor por defecto. Inizializa latitud y longitud a 0, y descripcion a "".
      */
     Punto(){
         latitud = 0;
         longitud = 0;
+        descripcion = 0;
     }
     
     /**
      * @brief Constructor paramétrico.
-     * @param l
-     * @param L
-     * @param d
+     * @param l latitud 
+     * @param L longitud 
+     * @param d descripción
      */
-    Punto(double l, double L, const string & d) :latitud(l), longitud(L){
-    
+    Punto(double l, double L, const string & d){
+        latitud = l;
+        longitud = L;
+        descripcion = d;    
     }
+    
+    /**
+     * @brief Constructir por copia
+     * @param other Punto a copiar. El nuevo Punto será igual que other.
+     */
+    Punto(const Punto& other){
+        Punto(other.latitud, other.longitud, other.descripcion);
+}
     
     /**
      * @brief Obtiener la latitud del Punto
@@ -54,6 +67,14 @@ public:
     }
     
     /**
+     * @brief Obtiene la descripcion del Punto.
+     * @return Descripcion del Punto.
+     */
+    string GetDescripcion()const{
+        return descripcion;
+    }
+    
+    /**
      * @brief Establece la latitud del punto.
      * @param l Valor de la latitud.
      */
@@ -69,6 +90,19 @@ public:
         longitud = l;
     }
     
+    /**
+     * @brief Establece la descrpcion del Punto.
+     * @param descripcion Descripción del Punto.
+     */
+    void SetDescripcion(string descripcion) {
+        this->descripcion = descripcion;
+    }
+
+    /**
+     * 
+     * @param p
+     * @return 
+     */
     bool operator<(const Punto &p)const;
     
     bool operator==(const Punto &p)const;
