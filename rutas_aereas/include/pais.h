@@ -46,14 +46,17 @@ class Pais{
         return bandera;
     }
     
-    bool operator<(const Pais &P)const;
-	//Implementar...
-    
-    bool operator==(const Pais &P)const;
-	//Implementar...
-    
-     bool operator==(const Punto &P)const;
-	//Implementar...
+    bool operator<(const Pais &P) const {
+        return p < P.p;
+    }
+
+    bool operator==(const Pais &P) const {
+        return (p == P.p) && (pais == P.pais) && (bandera == P.bandera);
+    }
+
+    bool operator==(const Punto &P) const {
+        return p == P;
+    }
     
     friend istream & operator>>(istream & is, Pais & P){
         double lat,lng;
