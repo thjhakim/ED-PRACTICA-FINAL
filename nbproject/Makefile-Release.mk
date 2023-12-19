@@ -34,12 +34,7 @@ include Makefile
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
-OBJECTFILES= \
-	${OBJECTDIR}/rutas_aereas/src/almacenRutas.o \
-	${OBJECTDIR}/rutas_aereas/src/pais.o \
-	${OBJECTDIR}/rutas_aereas/src/paises.o \
-	${OBJECTDIR}/rutas_aereas/src/punto.o \
-	${OBJECTDIR}/rutas_aereas/src/rutas.o
+OBJECTFILES=
 
 
 # C Compiler Flags
@@ -64,32 +59,7 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/practicafinaled: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/practicafinaled ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/rutas_aereas/src/almacenRutas.o: rutas_aereas/src/almacenRutas.cpp
-	${MKDIR} -p ${OBJECTDIR}/rutas_aereas/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutas_aereas/src/almacenRutas.o rutas_aereas/src/almacenRutas.cpp
-
-${OBJECTDIR}/rutas_aereas/src/pais.o: rutas_aereas/src/pais.cpp
-	${MKDIR} -p ${OBJECTDIR}/rutas_aereas/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutas_aereas/src/pais.o rutas_aereas/src/pais.cpp
-
-${OBJECTDIR}/rutas_aereas/src/paises.o: rutas_aereas/src/paises.cpp
-	${MKDIR} -p ${OBJECTDIR}/rutas_aereas/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutas_aereas/src/paises.o rutas_aereas/src/paises.cpp
-
-${OBJECTDIR}/rutas_aereas/src/punto.o: rutas_aereas/src/punto.cpp
-	${MKDIR} -p ${OBJECTDIR}/rutas_aereas/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutas_aereas/src/punto.o rutas_aereas/src/punto.cpp
-
-${OBJECTDIR}/rutas_aereas/src/rutas.o: rutas_aereas/src/rutas.cpp
-	${MKDIR} -p ${OBJECTDIR}/rutas_aereas/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutas_aereas/src/rutas.o rutas_aereas/src/rutas.cpp
+	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/practicafinaled ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 # Subprojects
 .build-subprojects:
