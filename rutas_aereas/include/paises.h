@@ -1,3 +1,5 @@
+
+
 /* 
  * File:   paises.h
  * Author: angel_rodriguez
@@ -13,6 +15,7 @@
 #include <set>
 using namespace std;
 
+using namespace std;
 class Paises {
 private:
     set<Pais> datos;
