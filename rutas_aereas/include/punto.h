@@ -99,13 +99,18 @@ public:
     }
 
     /**
-     * Operador de menor (<) sobrecargado
-     * @param p 
-     * @return 
+     * Operador de menor (<) sobrecargado para comparar si un Punto es menor que otro.
+     * @param p objeto de la clase Punto que va a ser comparado.
+     * @return true si el Punto que llama a la funcion es menor que el Punto que se pasa por parámetro.
+     *         false si no.
      */
     bool operator<(const Punto &p)const{
-        ...........       
-        
+        if(latitud < p.latitud)
+            return true;
+        else if (latitud > p.latitud)
+            return false;
+        else //latitud == p.latitud
+            return longitud < p.longitud; 
     }
     
     /**
