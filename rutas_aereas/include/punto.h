@@ -1,7 +1,7 @@
 
 /* 
- * File:   punto.h
- * Author: angel_rodriguez
+ * @file   punto.h
+ * Author angel_rodriguez
  */
 
 #ifndef PUNTO_H
@@ -32,9 +32,9 @@ public:
     
     /**
      * @brief Constructor paramétrico.
-     * @param l latitud 
-     * @param L longitud 
-     * @param d descripción
+     * @param l latitud del Punto
+     * @param L longitud del Punto
+     * @param d descripción del Punto
      */
     Punto(double l, double L, const string & d){
         latitud = l;
@@ -48,7 +48,7 @@ public:
      */
     Punto(const Punto& other){
         Punto(other.latitud, other.longitud, other.descripcion);
-}
+    }
     
     /**
      * @brief Obtiener la latitud del Punto
@@ -99,17 +99,61 @@ public:
     }
 
     /**
-     * 
-     * @param p
+     * Operador de menor (<) sobrecargado
+     * @param p 
      * @return 
      */
-    bool operator<(const Punto &p)const;
+    bool operator<(const Punto &p)const{
+        ...........       
+        
+    }
     
-    bool operator==(const Punto &p)const;
+    /**
+     * @brief Operador de igualdad (==) sobrecargado. Comprueba si dos objetos 
+     *        de la clase Punto son iguales.
+     * @param p Objeto de la clase Punto para comparar.
+     * @return true si son iguales, false si no lo son.
+     */
+    bool operator==(const Punto &p)const{
+        return (latitud == p.latitud && longitud == p.longitud && descripcion == p.descripcion);        
+    }
     
-    friend istream & operator>>(istream & is, Punto &p);
+    /**
+     * @brief Operador de extracción sobrecargado para leer un Punto desde un flujo de entradaa.
+     * @param is Flujo de entrada para leer los datos.
+     * @param p Objeto de la clase Punto donde se guardaran los datos leidos.
+     * @return is Devuelve una referencia constante al flujo de entrada.
+     */
+    friend istream & operator>>(istream & is, Punto &p){
+        double l, L; 
+        string des;
+        
+        cout << "Introduzca la latitud: ";
+        is >> l;
+
+        cout << "Introduzca la longitud: ";
+        is >> L;
+
+        cout << "Introduzca la descripción: ";
+        getline(is >> ws, des); // getline para leer toda la línea  
+        
+        p.SetLatitud(l);
+        p.SetLongitud(L);
+        p.SetDescripcion(des);   
+        
+        return is;
+    }
     
-    friend ostream & operator<<(ostream & os, const Punto &p);
+    /**
+     * @brief Operador de insercción sobrecargado para mostrar un Punto a traves del flujo de salida.
+     * @param os Flujo de salida por el que se imprimira el Punto.
+     * @param p objeto de la clase Punto. Será el punto que se imprima.
+     * @return Devuelve una referencia constante al flujo de salida. 
+     */
+    friend ostream & operator<<(ostream & os, const Punto &p){
+        os << "(" << p.latitud << ', ' << p.longitud << ') Descripcion: ' << p.descripcion;
+        return os;
+    }
 };
 
 

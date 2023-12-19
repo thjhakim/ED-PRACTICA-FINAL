@@ -17,7 +17,7 @@ using namespace std;
 
 /**
  * @class Ruta
- * @brief Representa una ruta aérea con una serie de puntos.
+ * @brief Representa una ruta aérea con una serie de puntos y un codigo que la identifica.
  */
 class Ruta{
 private:
@@ -34,6 +34,24 @@ public:
     }
     
     /**
+     * Constructor paramétrico
+     * @param puntos
+     * @param code
+     */
+    Ruta(list<Punto> puntos, string code) :
+        puntos(puntos), code(code) {
+    }
+    
+    /**
+     * Constructor de copia.
+     * @param other
+     */
+    Ruta(const Ruta& other) :
+    puntos(other.puntos), code(other.code) {
+    }
+
+
+    /**
      * @brief Inserta un punto en la lista.
      * @param n punto a insertar pasado por referencia.
      */
@@ -43,6 +61,14 @@ public:
     
     void Borrar(const Punto &n){
         
+    }
+    
+    /**
+     * Obtiene la lista de puntos de la ruta.
+     * @return lista con los puntos que definen la ruta.
+     */
+    list<Punto> GetPuntos()const{
+        return puntos;
     }
     
     /**
@@ -60,6 +86,15 @@ public:
     void SetCode(const string & code){
         this->code = code;
     }
+    
+    /**
+     * Inserta la lista con los puntos de la ruta.
+     * @param puntos lista pasada por referencia cte. con los puntos de la ruta.
+     */
+    void SetPuntos(const list<Punto> & puntos) {
+        this->puntos = puntos;
+    }
+
     
     bool operator==(const Ruta &R)const;
     bool operator<(const Ruta &R)const;
