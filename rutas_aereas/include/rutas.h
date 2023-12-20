@@ -262,7 +262,7 @@ public:
     };
     
     /**
-     * Obtiene un iterador que apunta al inicio de la lista de los puntos de la Ruta.
+     * @brief Obtiene un iterador que apunta al inicio de la lista de los puntos de la Ruta.
      * @return Referencia al iterador.
      */
     iterator begin(){
@@ -270,7 +270,7 @@ public:
     }
     
     /**
-     * Obtiene un iterador constante que apunta al inicio de la lista de los puntos de la Ruta.
+     * @brief Obtiene un iterador constante que apunta al inicio de la lista de los puntos de la Ruta.
      * @return Referencia al iterador constante.
      */
     const_iterator begin()const{
@@ -278,7 +278,7 @@ public:
     }
     
     /**
-     * Obtiene un iterador que apunta al final de la lista de los puntos de la Ruta.
+     * @brief Obtiene un iterador que apunta al final de la lista de los puntos de la Ruta.
      * @return Referencia al iterador.
      */
     iterator end(){
@@ -286,7 +286,7 @@ public:
     }
     
     /**
-     * Obtiene un iterador constante que apunta al final de la lista de los puntos de la Ruta.
+     * @brief Obtiene un iterador constante que apunta al final de la lista de los puntos de la Ruta.
      * @return Referencia al iterador constante.
      */
     const_iterator end()const{
