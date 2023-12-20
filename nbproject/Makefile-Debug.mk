@@ -34,7 +34,8 @@ include Makefile
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES= \
+	${OBJECTDIR}/rutas_aereas/src/rutasAereas.o
 
 
 # C Compiler Flags
@@ -59,7 +60,12 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/practicafinaled: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/practicafinaled ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/practicafinaled ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/rutas_aereas/src/rutasAereas.o: rutas_aereas/src/rutasAereas.cpp
+	${MKDIR} -p ${OBJECTDIR}/rutas_aereas/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Irutas_aereas/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutas_aereas/src/rutasAereas.o rutas_aereas/src/rutasAereas.cpp
 
 # Subprojects
 .build-subprojects:
