@@ -127,7 +127,7 @@ public:
      * @brief Operador de extracción sobrecargado para leer un Punto desde un flujo de entradaa.
      * @param is Flujo de entrada para leer los datos.
      * @param p Objeto de la clase Punto donde se guardaran los datos leidos.
-     * @return is Devuelve una referencia constante al flujo de entrada.
+     * @return Devuelve una referencia constante al flujo de entrada.
      */
     friend istream & operator>>(istream & is, Punto &p){
         double l, L; 
