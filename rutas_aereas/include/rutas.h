@@ -108,15 +108,13 @@ public:
     
     /**
      * @brief Operador (<). Comprueba si una Ruta es menor que otra.
-     * Para ello, suma la longitud de cada uno de sus puntos
+     * Para ello, comprueba que clase tiene más puntos.
      * @param R Objeto de la clase Ruta para comparar.
      * @return true si son iguales, false si no lo son.
      */
     bool operator<(const Ruta &R)const{
-        
+        return (puntos.size() < R.puntos.size());
     }
-    
-    
     
     /**
      * @class iterator Es una clase anidada dentro de Ruta. 
@@ -295,10 +293,60 @@ public:
         return const_iterator(puntos.end());
     }
     
-    iterator find(const Punto &p);
+    /**
+     * @brief Este método busca un punto en la lista de puntos de la ruta.
+     * @param p Objeto de la clase punto que va a ser buscado dentro de la lista puntos.
+     * @return Devuelve un iterador al punto si es que lo encuentra, de ser así,
+     *         devuelve un iterador que apunta al final de la lista.
+     */
+    iterator find(const Punto &p){
+        for (iterator ite = begin(); ite != end(); ite++) {
+            if (*ite == p) {
+                return ite;
+            }
+        }
+        return end(); 
+    }
     
-    friend istream & operator>>(istream & is, Ruta & R);
-    friend ostream & operator<<(ostream & os, const Ruta &R);
+    /**
+     * @brief Operador de extracción sobrecargado para leer una Ruta desde un flujo de entradaa.
+     * @param is Flujo de entrada para leer los datos.
+     * @param R Objeto de la clase Ruta donde se guardaran los datos leidos.
+     * @return Devuelve una referencia constante al flujo de entrada.
+     */
+    friend istream & operator>>(istream & is, Ruta & R){
+        int numPuntos = -1;
+        Punto p;
+        R.puntos.clear();
+        is >> R.code;       // Se guarda el codigo de la ruta.
+        is >> numPuntos;    // Se leen el número de puntos de la ruta.
+        
+        for(int i = 0; i < numPuntos; i++){
+            is >> p;
+            R.puntos.push_back(p);  // Se van leyendo los puntos y guardadndolos en la lista de Ruta
+        }
+        
+        return is;
+        
+    }
+    
+    /**
+     * @brief Operador de insercción sobrecargado para mostrar un Punto a traves del flujo de salida.
+     * @param os Flujo de salida por el que se imprimira el Punto.
+     * @param R objeto de la clase Punto. Será la Ruta que se imprima por pantalla.
+     * @return Devuelve una referencia constante al flujo de salida. 
+     */
+    friend ostream & operator<<(ostream & os, const Ruta &R){
+        os << R.GetCode() << " " << R.puntos.size() << " "; 
+        
+        for(Ruta::const_iterator ite = R.begin(); ite != R.end(); ite++){
+            os << *ite << " ";
+        }
+        
+        os << "\n";
+        
+        return os;
+    }
 };
 
 
