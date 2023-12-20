@@ -7,233 +7,279 @@
 #ifndef IMAGEN_H
 #define IMAGEN_H
 
-#include <iostream>
 #include "imagenES.h"
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <cassert>
 
+/**
+ * @brief Enumeracion para representar los tipos de pegado al insertar una imagen en otra.
+ */
+enum Tipo_Pegado { OPACO, BLENDING };	//Pegado opaco o con mezcla.
+
 using namespace std;
 
-enum Tipo_Pegado {OPACO, BLENDING};
-
-struct Pixel{
-    unsigned char r,g,b;
-    unsigned char transparencia; //255 es transparente, 0 no.
+/**
+ * @brief Estructura para representar un pixel con componentes RGB y transparencia.
+ */
+struct Pixel {
+  unsigned char r, g, b; //Colores
+  unsigned char transp; // 0 no 255 si
 };
 
-class Imagen{
+
+/**
+ * @brief Clase que representa una imagen y proporciona operaciones basicas.
+ */
+class Imagen {
 private:
-    Pixel **datos; // donde se almacena la información de la imagen. 
-    int nf,nc;     // nf: numero de filas, nc: numero de columnas
+    Pixel **data; //Puntero a la matriz de pixeles.
+    int nf, nc;   //Número de filas y columnas de la imagen.
+
+    /**
+     * @brief Funcion privada para liberar la memoria ocupada por la matriz de pixeles.
+     */
+    void Borrar();
+
+    /**
+     * @brief Funcion privada para copiar el contenido de otra imagen.
+     * @param I Imagen a copiar.
+     */	
+  void Copiar(const Imagen &I);
 
 public:
-
-    /**
-     * @brief Constructor paramétrico
-     * @param nf numero de filas de la Imagen
-     * @param nc numero de columnas de la Imagen
+     /**
+     * @brief Constructor por defecto. Crea una imagen vacia.
      */
-    Imagen (int nf,int nc){
-        this->nf = nf;
-        this->nc = nc;
-        datos = new Pixel*[nf];
-        for (int i=0;i<nf;i++){
-            datos[i]=new Pixel[nc];
-            for (int j=0;j<nc;j++){
-                datos[i][j].r=255;
-                datos[i][j].g=255;
-                datos[i][j].b=255;
-                datos[i][j].transparencia=255;
-            }   
-        }  
-    }
-    
-    /**
-     * @brief Constructor por defecto.
+  Imagen();
+  
+     /**
+     * @brief Constructor que crea una imagen con dimensiones dadas.
+     * @param f Numero de filas.
+     * @param c Numero de columnas.
      */
-    Imagen(){
-        Imagen(1,1);
-    }
-    
-    /**
+  Imagen(int f, int c);
+  
+     /**
      * @brief Constructor de copia.
-     * @param I Imagen a copiar
+     * @param I Imagen a copiar.
      */
-    Imagen(const Imagen &I){
-        Imagen(I.nf, I.nc);
-    }
-    
-    /**
+  Imagen(const Imagen &I);
+  
+     /**
+     * @brief Operador de asignacion.
+     * @param I Imagen a asignar.
+     * @return Referencia a la imagen actual despues de la asignacion.
+     */
+  Imagen &operator=(const Imagen &I);
+  
+     /**
      * @brief Destructor.
      */
-    ~Imagen(){
-        for (int i = 0; i < nf; i++) {
-            delete[] datos[i];
-        }
-        delete[] datos;  
-    } 
-    
-    /**
-     * @brief Obtiene el numero de filas de la Imagen
-     * @return nf Numero de filas
-     */
-    int GetFilas()const{
-        return nf;
-    }
-    
-    /**
-     * @brief Obtiene el numero de columnas de la Imagen
-     * @return nc Numero de columnas
-     */
-    int GetCols()const{
-        return nc;
-    }
-    
-    /**
-     * @brief Inserta el numero de filas de la Imagen
-     * @param nf Numero de filas
-     */
-    void SetFilas(int nf) {
-        this->nf = nf;
-    }
-    
-    /**
-     * @brief Inserta el numero de columnas de la Imagen
-     * @param nc numero de columnas
-     */
-    void SetColumnas(int nc) {
-        this->nc = nc;
-    }
-    
-    
-    Imagen & operator =(const Imagen & I){
-        
-        
-        
-        
-    }
-    
-    Pixel & operator()(int i,int j){ // devuelve el pixel en la posicion i,j
-    
-        
-        
-        
-    }
-    
-    /**
-     * @brief Operador () sobrecargado para acceder a un pixel específico de la Imagen.
-     * @param i fila del pixel 
-     * @param j columna del pixel
-     * @return Devuelve una referencia constante al pixel de la posición especificada.
-     * @pre 0 <= i < nf  y  0 <= j <= nc (deben de estar dentro de los límites de la Imagen).  
-     */
-    const Pixel & operator ()(int i, int j){
-        assert(i>=0 && i<nf && j>=0 && j<nc);
-        return datos[i][j];
-    }
-    
-    /**
-     * 
-     * @param nombre
-     */
-    void EscribirImagen(const char * nombre){ //escribe en disco la imagen
-        unsigned char * aux = new unsigned char [nf*nc*3];
-        unsigned char * m = new unsigned char [nf*nc];
-      
-        int total = nf*nc*3;
-        for (int i=0;i<total;i+=3){
-            int posi = i /(nc*3);
-            int posj = (i%(nc*3))/3;
-	    
-	    aux[i]=datos[posi][posj].r;
-	    aux[i+1]=datos[posi][posj].g;
-	    aux[i+2]=datos[posi][posj].b;
-	    m[i/3]=datos[posi][posj].transparencia;     
-	}    
-	
-        if (!EscribirImagenPPM (nombre, aux,nf,nc)){
-            cerr<<"Ha habido un problema en la escritura de "<<nombre<<endl;
-        }	  
-        delete[]aux;
-        string n_aux = "mascara_";
-        n_aux =n_aux+nombre;
-        std::size_t found =n_aux.find(".ppm");
-        if (found!=std::string::npos){
-            n_aux =n_aux.substr(0,found);
-        }
-        n_aux =n_aux+".pgm";
+  ~Imagen();
 
-      
-        if (!EscribirImagenPGM (n_aux.c_str(), m,nf,nc)){
-            cerr<<"Ha habido un problema en la escritura de "<<n_aux<<endl;
-        }	    
-        delete []m;
-    }
-    
-    void LeerImagen(const char *nombre, const string &nombremascara=""){ //Leer una imagen de disco.
-          int f,c;
-      unsigned char * aux,*aux_mask ;
-      
-      LeerTipoImagen(nombre, f, c);
-      aux = new unsigned char [f*c*3];
-      LeerImagenPPM (nombre, f,c,aux);
-      if (nombremascara!=""){
-	int fm,cm;
-	LeerTipoImagen(nombremascara.c_str(), fm, cm);
-	aux_mask = new unsigned char [fm*cm];
-	LeerImagenPGM(nombremascara.c_str(), fm,cm,aux_mask);
-      }
-      else{
-	aux_mask=0;
-      }	
-      
-      
-      Imagen I(f,c);
-      int total = f*c*3;
-      for (int i=0;i<total;i+=3){
-	   int posi = i /(c*3);
-	   int posj = (i%(c*3))/3;
-	//   cout<<posi<<" " <<posj<<endl;
-	     I.data[posi][posj].r=aux[i];
-	     I.data[posi][posj].g=aux[i+1];
-	     I.data[posi][posj].b=aux[i+2];
-	     if (aux_mask!=0)
-	      I.data[posi][posj].transp=aux_mask[i/3];
-	     else  
-	       I.data[posi][posj].transp=255;
-	 }    
-	  
-      *this = I;   
-      if (aux_mask!=0) delete[]aux_mask;
-      delete []aux;
-    }
-    
-    void LimpiarTransp(){
-        
-    }
-    
-    void PutImagen(int posi, int posj, const Imagen &I, Tipo_Pegado tippegado=OPACO){
-        //assert(nf>=posi+I.nf && nc>=posj+I.nc);
-    
-        for (int i=0;i<I.nf;i++){
-            for (int j=0;j<I.nc;j++){
-                if (i+posi>=0 && i+posi<nf && j+posj>=0 && j+posj<nc){
-                    if (I.data[i][j].transp!=0){
-                        if (tippegado==OPACO)
-                            data[i+posi][j+posj]=I.data[i][j];
-                        else{
-                            data[i+posi][j+posj].r=(data[i+posi][j+posj].r+I.data[i][j].r)/2;
-                            data[i+posi][j+posj].g=(data[i+posi][j+posj].r+I.data[i][j].g)/2;
-                            data[i+posi][j+posj].b=(data[i+posi][j+posj].r+I.data[i][j].b)/2;
-                        }              
-                    }  
-                }
-            }
-        }
-    }
-    
-    Imagen ExtraeImagen(int posi, int posj, int dimi, int dmj);
+     /**
+     * @brief Operador de acceso para lectura y escritura.
+     * @param i Fila del pixel.
+     * @param j Columna del pixel.
+     * @return Referencia al pixel en la posicion (i, j).
+     */
+  Pixel &operator()(int i, int j);
+  
+     /**
+     * @brief Operador de acceso constante para lectura.
+     * @param i Fila del pixel.
+     * @param j Columna del pixel.
+     * @return Referencia constante al píxel en la posición (i, j).
+     */
+  const Pixel &operator()(int i, int j) const;
+
+      /**
+      * @brief Escribe la imagen en un archivo con formato PPM y su mascara en formato PGM.
+      * @param nombre Nombre del archivo de salida (sin extension).
+      */
+  void EscribirImagen(const char *nombre);
+  
+      /**
+      * @brief Lee una imagen desde un archivo con formato PPM y, opcionalmente, su mascara desde un archivo PGM.
+      * @param nombre Nombre del archivo de entrada (con extension).
+      * @param nombremascara Nombre del archivo de máscara (opcional).
+      */
+  void LeerImagen(const char *nombre, const string &nombremascara = "");
+  
+    /**
+     * @brief Limpia la transparencia de la imagen, estableciendo a 255 la transparencia de todos los pixeles.
+     */
+  void LimpiarTransp();
+  
+      /**
+      * @brief Obtiene el numero de filas de la imagen.
+      * @return Numero de filas.
+      */
+  int num_filas() const { return nf; }
+  
+      /**
+      * @brief Obtiene el numero de columnas de la imagen.
+      * @return Numero de columnas.
+      */
+  int num_cols() const { return nc; }
+  
+      /**
+      * @brief Pega una imagen en la posicion especificada con un tipo de pegado.
+      * @param posi Fila de inicio para pegar la imagen.
+      * @param posj Columna de inicio para pegar la imagen.
+      * @param I Imagen a pegar.
+      * @param tippegado Tipo de pegado (OPACO o BLENDING).
+      */
+  void PutImagen(int posi, int posj, const Imagen &I, Tipo_Pegado tippegado = OPACO);
+  
+      /**
+      * @brief Extrae una region de la imagen.
+      * @param posi Fila de inicio de la region.
+      * @param posj Columna de inicio de la region.
+      * @param dimi Numero de filas de la region.
+      * @param dimj Numero de columnas de la region.
+      * @return Imagen extraida.
+      */
+  Imagen ExtraeImagen(int posi, int posj, int dimi, int dimj);
 };
 
+/**
+ * @brief Constructor de la clase Imagen.
+ *
+ * Este constructor inicializa una nueva instancia de la clase Imagen con las dimensiones especificadas.
+ * Cada pixel en la imagen se establece con valores predeterminados, con todos los canales de color (r, g, b) en 255 (blanco) y la transparencia en 255 (no transparente).
+ *
+ * @param f Numero de filas de la imagen.
+ * @param c Numero de columnas de la imagen.
+ */
+Imagen::Imagen(int f, int c) {
+  nf = f;
+  nc = c;
+  data = new Pixel *[nf];
+  for (int i = 0; i < nf; i++) {
+    data[i] = new Pixel[nc];
+    for (int j = 0; j < nc; j++) {
+      data[i][j].r = 255;
+      data[i][j].g = 255;
+      data[i][j].b = 255;
+      data[i][j].transp = 255;
+    }
+  }
+}
 
-#endif /* IMAGEN_H */
+    /**
+     * @brief Operador de acceso constante para lectura.
+     * @param i Fila del pixel.
+     * @param j Columna del pixel.
+     * @return Referencia constante al pixel en la posicion (i, j).
+     */
+const Pixel &Imagen::operator()(int i, int j) const {
+  assert(i >= 0 && i < nf && j >= 0 && j < nc);
+  return data[i][j];
+}
+
+    /**
+     * @brief Escribe la imagen en un archivo con formato PPM y su mascara en formato PGM.
+     * @param nombre Nombre del archivo de salida (sin extension).
+     */
+void Imagen::EscribirImagen(const char *nombre) {
+  unsigned char *aux = new unsigned char[nf * nc * 3];
+  unsigned char *m = new unsigned char[nf * nc];
+
+  int total = nf * nc * 3;
+  for (int i = 0; i < total; i += 3) {
+    int posi = i / (nc * 3);
+    int posj = (i % (nc * 3)) / 3;
+
+    aux[i] = data[posi][posj].r;
+    aux[i + 1] = data[posi][posj].g;
+    aux[i + 2] = data[posi][posj].b;
+    m[i / 3] = data[posi][posj].transp;
+  }
+
+  if (!EscribirImagenPPM(nombre, aux, nf, nc)) {
+    cerr << "Ha habido un problema en la escritura de " << nombre << endl;
+  }
+  delete[] aux;
+  string n_aux = "mascara_";
+  n_aux = n_aux + nombre;
+  std::size_t found = n_aux.find(".ppm");
+  if (found != std::string::npos) {
+    n_aux = n_aux.substr(0, found);
+  }
+  n_aux = n_aux + ".pgm";
+
+  if (!EscribirImagenPGM(n_aux.c_str(), m, nf, nc)) {
+    cerr << "Ha habido un problema en la escritura de " << n_aux << endl;
+  }
+  delete[] m;
+}
+
+    /**
+     * @brief Lee una imagen desde un archivo con formato PPM y, opcionalmente, su mascara desde un archivo PGM.
+     * @param nombre Nombre del archivo de entrada (con extension).
+     * @param nombremascara Nombre del archivo de mascara (opcional).
+     */
+void Imagen::LeerImagen(const char *nombre, const string &nombremascara) {
+  int f, c;
+  unsigned char *aux, *aux_mask;
+
+  LeerTipoImagen(nombre, f, c);
+  aux = new unsigned char[f * c * 3];
+  LeerImagenPPM(nombre, f, c, aux);
+  if (nombremascara != "") {
+    int fm, cm;
+    LeerTipoImagen(nombremascara.c_str(), fm, cm);
+    aux_mask = new unsigned char[fm * cm];
+    LeerImagenPGM(nombremascara.c_str(), fm, cm, aux_mask);
+  } else {
+    aux_mask = 0;
+  }
+
+  Imagen I(f, c);
+  int total = f * c * 3;
+  for (int i = 0; i < total; i += 3) {
+    int posi = i / (c * 3);
+    int posj = (i % (c * 3)) / 3;
+
+    I.data[posi][posj].r = aux[i];
+    I.data[posi][posj].g = aux[i + 1];
+    I.data[posi][posj].b = aux[i + 2];
+    if (aux_mask != 0)
+      I.data[posi][posj].transp = aux_mask[i / 3];
+    else
+      I.data[posi][posj].transp = 255;
+  }
+
+  *this = I;
+  if (aux_mask != 0)
+    delete[] aux_mask;
+  delete[] aux;
+}
+
+    /**
+     * @brief Pega una imagen en la posicion especificada con un tipo de pegado.
+     * @param posi Fila de inicio para pegar la imagen.
+     * @param posj Columna de inicio para pegar la imagen.
+     * @param I Imagen a pegar.
+     * @param tippegado Tipo de pegado (OPACO o BLENDING).
+     */
+void Imagen::PutImagen(int posi, int posj, const Imagen &I, Tipo_Pegado tippegado) {
+  for (int i = 0; i < I.nf; i++)
+    for (int j = 0; j < I.nc; j++)
+      if (i + posi >= 0 && i + posi < nf && j + posj >= 0 && j + posj < nc) {
+        if (I.data[i][j].transp != 0) {
+          if (tippegado == OPACO)
+            data[i + posi][j + posj] = I.data[i][j];
+          else {
+            data[i + posi][j + posj].r = (data[i + posi][j + posj].r + I.data[i][j].r) / 2;
+            data[i + posi][j + posj].g = (data[i + posi][j + posj].r + I.data[i][j].g) / 2;
+            data[i + posi][j + posj].b = (data[i + posi][j + posj].r + I.data[i][j].b) / 2;
+          }
+        }
+      }
+}
+
+#endif  // IMAGEN_H
