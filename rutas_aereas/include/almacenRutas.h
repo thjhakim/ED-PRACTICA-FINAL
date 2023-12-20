@@ -13,6 +13,7 @@
 #include <string>
 #include <map>
 #include <utility>
+#include <functional>
 #include "rutas.h"
 #include "punto.h"
 using namespace std;
@@ -27,16 +28,46 @@ public:
     AlmacenRutas(){}
     
     /**
-     * @brief Inserta una Ruta en el almacen de Rutas.
+     * @brief Inserta una Ruta en el almacen de Rutas. 
+     * @pre que la ruta R que queremos introducir no este ya en el mapa.
      * @param R ruta que queremos insertar.
      */
     void Insertar(const Ruta & R){
-        rutas[R.GetCode()] = R;
+        map<string,Ruta>::iterator ite = rutas.find(R.GetCode());
+        if((*ite).second == R.GetCode()) {
+            cout << "Se ha producido un error. La ruta ya existe dentro del mapa." << endl;
+            return;
+        }
+
+        // Si la ruta no existe, la insertamos en el mapa
+        rutas.insert(pair<string, Ruta>(R.GetCode(), R));
     }
     
     
-    void Borrar(const Ruta &R);
-    Ruta GetRuta(const string &a);
+    /**
+     * @brief Borra una Ruta que esta dentro del mapa.
+     * @pre La ruta debe de estar dentro del mapa.
+     * @param R Ruta a borrar
+     */
+    void Borrar(const Ruta &R){
+        map<string,Ruta>::iterator ite = rutas.find(R.GetCode());
+        if (ite != rutas.end()) 
+            rutas.erase(ite);
+        else 
+            cout << "Se ha producido un error. La ruta no existe en el mapa" << endl;
+    }
+    
+    /**
+     * @brief Obtiene una ruta del almacen/mapa rutas.
+     * @param a codigo identificador de la ruta para buscarla dentro del mapa.
+     * @return objeto de la clase Ruta.
+     * @pre La ruta debe estar guardada previamente en el mapa.
+     */
+    Ruta GetRuta(const string &a){
+        map<string,Ruta>::iterator ite = rutas.find(a);
+        return (*ite).second;
+    }
+    
     
     
     
@@ -110,6 +141,8 @@ public:
         friend class AlmacenRutas;
         friend class const_iterator;       
     };
+    
+    
     
     
     /**
@@ -216,7 +249,6 @@ public:
         return const_iterator(rutas.end());
     }  
     
-    
     /**
      * @brief Operador de extracción sobrecargado para leer una Ruta desde un flujo de entradaa.
      * @param is Flujo de entrada para leer los datos.
@@ -224,7 +256,37 @@ public:
      * @return Devuelve una referencia constante al flujo de entrada.
      */
     friend istream & operator>>(istream & is, AlmacenRutas & AR){
+    /*
+        Ejemplos de rutas (fichero almacen_rutas.txt):
+        #Rutas
+        R1  5 (34.520418555522845,69.20082090000005) (52.50786264022465,13.426141949999987)
+        (7.406652727545182,12.344585699999925) (-0.18659558628491132,-78.4305382) (40.40051528912146 ,-3.5916460749999635)
+        R2 ...
+        .
+        .
+        .
+     */
+        string cabeceraRuta;
+        is >> cabeceraRuta;
         
+        if (cabeceraRuta != "#Rutas") {
+            cout << "Error: Cabecera de rutas incorrecta." << endl;
+            return is;
+        }
+        
+        while (is && is.peek() != '#'){
+            Ruta ruta_a_Insertar;
+            is >> ruta_a_Insertar;
+        
+            if(is)
+                AR.Insertar(ruta_a_Insertar);
+            else{
+                cout << "Error al leer una ruta. La ruta no se ha insertado." << endl;
+                is.clear();
+            }   
+        }
+        
+        return is;       
     }
     
     /**
