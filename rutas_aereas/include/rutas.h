@@ -1,8 +1,11 @@
 
 /* 
  * File:   rutas.h
- * Author: angel_rodriguez
+ * Authors: Ángel Rodríguez Faya y Hakim Tahri
+ * 
+ * @brief Definición del TDA Rutas y sus métodos.
  */
+
 
 #ifndef RUTAS_H
 #define RUTAS_H

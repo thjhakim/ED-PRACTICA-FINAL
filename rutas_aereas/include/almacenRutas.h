@@ -1,9 +1,9 @@
 
 /* 
  * File:   almacenRutas.h
- * Author: angel_rodriguez
- *
- * Created on 18 de diciembre de 2023, 16:45
+ * Authors: Ángel Rodríguez Faya y Hakim Tahri
+ * 
+ * @brief Definición del TDA AlmacenRutas y sus métodos.
  */
 
 #ifndef ALMACENRUTAS_H

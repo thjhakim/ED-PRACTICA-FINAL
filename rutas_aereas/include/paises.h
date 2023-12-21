@@ -1,9 +1,11 @@
+
 /* 
  * File:   paises.h
- * Author: angel_rodriguez
- *
- * Created on 18 de diciembre de 2023, 16:44
+ * Authors: Ángel Rodríguez Faya y Hakim Tahri
+ * 
+ * @brief Definición del  TDA Paises y sus métodos.
  */
+
 
 #ifndef PAISES_H
 #define PAISES_H

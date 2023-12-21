@@ -1,8 +1,11 @@
 
 /* 
- * @file   punto.h
- * Author angel_rodriguez
+ * File:    punto.h
+ * Authors: Ángel Rodríguez Faya y Hakim Tahri
+ * 
+ * @brief Definición del TDA Punto y sus métodos.
  */
+
 
 #ifndef PUNTO_H
 #define PUNTO_H
