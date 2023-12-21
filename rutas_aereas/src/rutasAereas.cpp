@@ -1,9 +1,9 @@
 
 #include <iostream>
 #include <string>
-#include "almacenRutas.h"
-#include "paises.h"
-#include "imagen.h"
+#include "../include/almacenRutas.h"
+#include "../include/paises.h"
+#include "../include/imagen.h"
 
 using namespace std;
 

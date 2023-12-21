@@ -6,8 +6,8 @@
  * @brief Implementación del archivo cabecera del TDA Imagen.
  */
 
-#include "imagen.h"
-#include "imagenES.h"
+#include "../include/imagen.h"
+#include "../include/imagenES.h"
 
 //------------------------------------------------------------------------------
 void Imagen::Borrar(){

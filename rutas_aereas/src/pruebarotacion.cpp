@@ -1,10 +1,11 @@
-#include "imagen.h"
+
+#include "../include/imagen.h"
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
 using namespace std;
 
-Imagen Rota(const Imagen & Io,double angulo){
+Imagen Imagen::Rota(const Imagen & Io,double angulo){
     double rads=angulo;
     double coseno = cos(angulo);
     double seno = sin(angulo);
@@ -41,7 +42,7 @@ Imagen Rota(const Imagen & Io,double angulo){
 		    new_col_min=inter1;	
 	    if(inter1>new_col_max)
 		    new_col_max=inter1;
-   }
+    }
     
     newimgrows=(unsigned)ceil((double)new_row_max-new_row_min);
     newimgcols=(unsigned)ceil((double)new_col_max-new_col_min);
@@ -73,8 +74,6 @@ Imagen Rota(const Imagen & Io,double angulo){
 	  
 }
 
-
-
 int main(int argc, char * argv[]){
   if (argc!=4){
     cout<<"Los parametros son :"<<endl;
@@ -85,10 +84,12 @@ int main(int argc, char * argv[]){
   }
   
   Imagen I;
-  I.LeerImagen(argv[1]);
+  I.LeerImagen(argv[1], "");
   double angulo=atof(argv[2]);
   angulo = angulo*(M_PI)/180;
-  Imagen Iout=Rota(I,angulo);
+  Imagen Iout;
+  Iout = I.Rota(I,angulo);
   Iout.EscribirImagen(argv[3]);
   
+  return 0;
 }  

@@ -170,6 +170,8 @@ public:
      * @return Imagen extraida.
      */
     Imagen ExtraeImagen(int posi, int posj, int dimi, int dimj);
+    
+    Imagen Rota(const Imagen & Io,double angulo);
 };
 
 #endif  // IMAGEN_H

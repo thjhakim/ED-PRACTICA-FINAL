@@ -8,7 +8,7 @@
 
 #include <fstream>
 #include <string>
-#include "imagenES.h"
+#include "../include/imagenES.h"
 using namespace std;
 
 

@@ -1,4 +1,5 @@
-#include "imagen.h"
+
+#include "../include/imagen.h"
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
@@ -20,7 +21,7 @@ int main(int argc, char * argv[]){
     return 0;
   }
   Imagen I,Ip;
-  I.LeerImagen(argv[1]);
+  I.LeerImagen(argv[1], "");
   Ip.LeerImagen(argv[2],argv[3]);
   int i,j;
   i=atoi(argv[5]); j=atoi(argv[6]);
