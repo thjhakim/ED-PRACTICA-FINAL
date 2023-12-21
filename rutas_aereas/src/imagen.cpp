@@ -46,9 +46,9 @@ Imagen::Imagen(int f, int c) {
     for (int i = 0; i < nf; i++) {
         datos[i] = new Pixel[nc];
 	for (int j = 0; j < nc; j++) {
-            datos[i][j].r = 0;
-            datos[i][j].g = 0;
-            datos[i][j].b = 0;
+            datos[i][j].r = 255;
+            datos[i][j].g = 255;
+            datos[i][j].b = 255;
             datos[i][j].transp = 0;
 	}
     }

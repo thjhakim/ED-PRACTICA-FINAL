@@ -30,7 +30,7 @@ public:
     Punto(){
         latitud = 0;
         longitud = 0;
-        descripcion = 0;
+        descripcion = "";
     }
     
     /**
@@ -159,8 +159,8 @@ public:
      * @return Devuelve una referencia constante al flujo de salida. 
      */
     friend ostream & operator<<(ostream & os, const Punto &p){
-        os << "(" << p.latitud << ', ' << p.longitud << ') Descripcion: ' << p.descripcion;
-        return os;
+        os << "(" << p.latitud << "," << p.longitud << ")";
+    return os;
     }
 };
 

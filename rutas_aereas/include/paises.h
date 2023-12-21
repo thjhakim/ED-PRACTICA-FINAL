@@ -67,7 +67,7 @@ public:
          * @return Una referencia al iterador constante despues de avanzar.
          */
         const_iterator& operator++() {
-            ++pto;
+            pto++;
             return *this;
         }
 
@@ -76,7 +76,7 @@ public:
          * @return Una referencia al iterador constante despues de retroceder.
          */
         const_iterator& operator--() {
-            --pto;
+            pto--;
             return *this;
         }
 
@@ -127,7 +127,7 @@ public:
          * @return Una referencia al iterador despues de avanzar.
          */
         iterator& operator++() {
-            ++pto;
+            pto++;
             return *this;
         }
 
@@ -136,16 +136,8 @@ public:
          * @return Una referencia al iterador despues de retroceder.
          */
         iterator& operator--() {
-            --pto;
+            pto--;
             return *this;
-        }
-
-        /**
-         * @brief Obtiene el pais actual al que apunta el iterador.
-         * @return Una referencia al pais actual.
-         */
-        Pais& operator*() {
-            return *pto;
         }
 
         /**

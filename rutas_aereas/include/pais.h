@@ -52,11 +52,7 @@ public:
     string GetBandera() const {
         return bandera;
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> origin/master
     /**
      * @brief Operador de comparación menor que sobrecargado para comparar países según sus coordenadas.
      * @param P El país con el que se va a comparar.
@@ -81,9 +77,8 @@ public:
      * @return True si las coordenadas son iguales.
      */
     bool operator==(const Punto &P) const {
-        return punto == P;
+        return p == P;
     }
-<<<<<<< HEAD
     
     /**
      * @brief Operador de flujo de entrada sobrecargado para leer información del país.
@@ -96,9 +91,9 @@ public:
 	
 	is>>lat>>lng>>P.pais>>P.bandera;
 	
-	P.punto=Punto(lat,lng,"");
+	P.p = Punto(lat,lng,"");
 	return is;
-=======
+    }
 
     /**
      * @brief Operador de flujo de entrada sobrecargado para leer información del país.
@@ -111,9 +106,8 @@ public:
         is >> lat >> lng >> P.pais >> P.bandera;
         P.p = Punto(lat, lng, "");
         return is;
->>>>>>> origin/master
     }
-<<<<<<< HEAD
+
     
     /**
      * @brief Operador de flujo de salida sobrecargado para imprimir información del país.
@@ -122,9 +116,9 @@ public:
      * @return El flujo de salida después de la impresión.
      */
     friend ostream & operator<<(ostream & os, const Pais &P){
-	os<<P.punto<<" "<<P.pais<<" "<<P.bandera<<endl;
+	os<<P.p<<" "<<P.pais<<" "<<P.bandera<<endl;
 	return os;
-=======
+    }
 
     /**
      * @brief Operador de flujo de salida sobrecargado para imprimir información del país.
@@ -135,7 +129,6 @@ public:
     friend ostream & operator<<(ostream &os, const Pais &P) {
         os << P.p << " " << P.pais << " " << P.bandera << endl;
         return os;
->>>>>>> origin/master
     }
 };
 

@@ -33,14 +33,13 @@ public:
      * @param R ruta que queremos insertar.
      */
     void Insertar(const Ruta & R){
-        map<string,Ruta>::iterator ite = rutas.find(R.GetCode());
-        if((*ite).second == R.GetCode()) {
-            cout << "Se ha producido un error. La ruta ya existe dentro del mapa." << endl;
-            return;
-        }
+        map<string, Ruta>::iterator ite = rutas.find(R.GetCode());
 
-        // Si la ruta no existe, la insertamos en el mapa
-        rutas.insert(pair<string, Ruta>(R.GetCode(), R));
+        if (ite == rutas.end()) // La ruta no existe, se puede insertar
+            rutas.insert(pair<string, Ruta>(R.GetCode(), R));
+        else // La ruta ya existe
+            cout << "Se ha producido un error. La ruta ya existe dentro del mapa." << endl;
+        
     }
     
     
@@ -54,7 +53,7 @@ public:
         if (ite != rutas.end()) 
             rutas.erase(ite);
         else 
-            cout << "Se ha producido un error. La ruta no existe en el mapa" << endl;
+            cout << "Se ha producido un error. La ruta no existe en el mapa" << endl; 
     }
     
     /**
@@ -129,14 +128,6 @@ public:
             return p == ite.p;            
         }
         
-        /**
-         * @brief El operador * accede al valor que apunta el iterador.
-         * @return Referencia al iterador (actualizado).
-         */
-        Punto& operator*()const{
-            return *p;
-        }
-        
         // Clases amigas de la clase iterator
         friend class AlmacenRutas;
         friend class const_iterator;       
@@ -160,11 +151,11 @@ public:
         const_iterator(){}
         
         /**
-         * @brief Constructor paramétrico de la clase const_iterator.
-         * @param cite Referencia al const_iterador de la lista de puntos.
+         * @brief Constructor de copia de la clase const_iterator.
+         * @param cite Referencia a un iterador constante.
          */
-        const_iterator(list<Punto>::const_iterator &cite){
-            this->p = cite;
+        const_iterator(const iterator &cite){
+            p = cite.p;
         }
         
         /**
@@ -203,18 +194,9 @@ public:
         bool operator==(const iterator& cite)const{
             return p == cite.p;            
         }
-        
-        /**
-         * @brief El operador * accede al valor que apunta el const_iterador.
-         * @return Referencia al const_iterador (actualizado).
-         */
-        const Punto& operator*()const{
-            return *p;
-        }
 
         // Clases amigas de la clase iterator
         friend class AlmacenRutas;
-        friend class const_iterator; 
     };
     
     /**
@@ -222,7 +204,9 @@ public:
      * @return Referencia al iterador.
      */
     iterator begin(){
-        return iterator(rutas.begin());       
+        iterator ite;
+        ite.p = rutas.begin();
+        return ite;      
     }
     
     /**
@@ -230,7 +214,9 @@ public:
      * @return Referencia al iterador constante.
      */
     const_iterator begin()const{
-        return const_iterator(rutas.begin());
+        const_iterator cite;
+        cite.p = rutas.begin();
+        return cite;      
     }
     
     /**
@@ -238,15 +224,20 @@ public:
      * @return Referencia al iterador.
      */
     iterator end(){
-        return iterator(rutas.end()); 
+        iterator ite;
+        ite.p = rutas.end();
+        return ite;      
     }
+    
     
     /**
      * @brief Obtiene un iterador constante que apunta al final del map del almacen de ruta.
      * @return Referencia al iterador constante.
      */
     const_iterator end()const{
-        return const_iterator(rutas.end());
+        const_iterator cite;
+        cite.p = rutas.end();
+        return cite; 
     }  
     
     /**
@@ -295,9 +286,9 @@ public:
      * @param R objeto de la clase AlmacenRutas. Será lo que se imprima por pantalla.
      * @return Devuelve una referencia constante al flujo de salida. 
      */
-    friend ostream & operator<<(ostream & os, const AlmacenRutas &R){
+    friend ostream & operator<<(ostream & os, const AlmacenRutas &AR){
         map<string,Ruta>::const_iterator cite;
-        for(cite = R.begin(); cite != R.end(); cite++){
+        for(cite = AR.rutas.begin(); cite != AR.rutas.end(); cite++){
             os << cite->first << " " << cite -> second;
             os << endl;
         } 

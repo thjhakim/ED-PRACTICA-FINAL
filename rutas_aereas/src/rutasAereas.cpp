@@ -26,7 +26,7 @@ int main(int argc, char * argv[]){
     f>>Pses;
     //cout<<Pses;
     Imagen I;
-    I.LeerImagen(argv[2]);
+    I.LeerImagen(argv[2], "");
   
     //Leemos los aviones 
     Imagen avion;

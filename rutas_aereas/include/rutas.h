@@ -269,7 +269,9 @@ public:
      * @return Referencia al iterador.
      */
     iterator begin(){
-        return iterator(puntos.begin());
+        iterator ite;
+        ite.p = puntos.begin();
+        return ite;
     }
     
     /**
@@ -277,7 +279,9 @@ public:
      * @return Referencia al iterador constante.
      */
     const_iterator begin()const{
-        return const_iterator(puntos.begin());
+        const_iterator cite;
+        cite.p = puntos.begin();
+        return cite;
     }
     
     /**
@@ -285,7 +289,9 @@ public:
      * @return Referencia al iterador.
      */
     iterator end(){
-        return iterator(puntos.end());
+        iterator ite;
+        ite.p = puntos.end();
+        return ite;
     }
     
     /**
@@ -293,7 +299,9 @@ public:
      * @return Referencia al iterador constante.
      */
     const_iterator end()const{
-        return const_iterator(puntos.end());
+        const_iterator cite;
+        cite.p = puntos.end();
+        return cite;
     }
     
     /**
@@ -302,13 +310,12 @@ public:
      * @return Devuelve un iterador al punto si es que lo encuentra, de ser así,
      *         devuelve un iterador que apunta al final de la lista.
      */
-    iterator find(const Punto &p){
-        for (iterator ite = begin(); ite != end(); ite++) {
-            if (*ite == p) {
-                return ite;
-            }
-        }
-        return end(); 
+    iterator find(const Punto &punto){
+        iterator ite;
+        list<Punto>::iterator it;
+        for (it = puntos.begin(); it != puntos.end() && !((*it) == punto); it++);
+        ite.p = it;
+        return it;
     }
     
     /**
@@ -340,10 +347,10 @@ public:
      * @return Devuelve una referencia constante al flujo de salida. 
      */
     friend ostream & operator<<(ostream & os, const Ruta &R){
-        os << R.GetCode() << " " << R.puntos.size() << " "; 
-        
-        for(Ruta::const_iterator ite = R.begin(); ite != R.end(); ite++){
-            os << *ite << " ";
+//        os << R.GetCode() << " " << R.puntos.size() << " "; 
+        list<Punto>::const_iterator cite;
+        for(cite = R.puntos.begin(); cite != R.puntos.end(); cite++){
+            os << *cite << " ";
         }
         
         os << "\n";
