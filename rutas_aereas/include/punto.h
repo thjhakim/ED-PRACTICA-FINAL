@@ -57,7 +57,7 @@ public:
      * @brief Obtiener la latitud del Punto
      * @return Valor de la latitud
      */
-    double Getlatitud()const{
+    double GetLatitud()const{
         return latitud;
     }
     
