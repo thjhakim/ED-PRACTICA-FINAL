@@ -22,7 +22,7 @@ int main(int argc, char * argv[]){
   }
   
   Imagen I,Ip;
-  I.LeerImagen(argv[1], "");
+  I.LeerImagen(argv[1]);
   Ip.LeerImagen(argv[2],argv[3]);
   int i,j;
   i=atoi(argv[5]); j=atoi(argv[6]);
